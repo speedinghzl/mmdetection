@@ -61,7 +61,7 @@ class MultiNecksDetector(BaseDetector, RPNTestMixin, BBoxTestMixin,
         return hasattr(self, 'rpn_head') and self.rpn_head is not None
 
     def init_weights(self, pretrained=None):
-        super(TwoStageDetector, self).init_weights(pretrained)
+        super(MultiNecksDetector, self).init_weights(pretrained)
         self.backbone.init_weights(pretrained=pretrained)
         if self.with_neck:
             if isinstance(self.neck, nn.Sequential):
