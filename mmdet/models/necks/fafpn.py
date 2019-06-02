@@ -95,9 +95,6 @@ class FAFPN(nn.Module):
                  in_channels,
                  out_channels,
                  num_outs=5,
-                 pooling_type='AVG',
-                 conv_cfg=None,
-                 norm_cfg=None,
                  with_cp=False):
         super(FAFPN, self).__init__()
         assert isinstance(in_channels, list)
@@ -106,8 +103,6 @@ class FAFPN(nn.Module):
         self.num_ins = len(in_channels)
         self.num_outs = num_outs
         self.with_cp = with_cp
-        self.conv_cfg = conv_cfg
-        self.norm_cfg = norm_cfg
 
 
         self.RRB1a = RRB(in_channels[0], out_channels)
@@ -130,7 +125,7 @@ class FAFPN(nn.Module):
                     nn.ReLU(True))
         
         self.fpn_convs = nn.ModuleList()
-        for i in range(5):
+        for i in range(self.num_outs):
             self.fpn_convs.append(nn.Conv2d(
                 in_channels=out_channels,
                 out_channels=out_channels,
